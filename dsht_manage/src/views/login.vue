@@ -62,6 +62,7 @@ export default {
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
+              
         if (valid) {
           this.axios
             .post("api/login", {
@@ -69,16 +70,33 @@ export default {
               password: this.loginInfo.password,
             })
             .then((res) => {
-              this.$message({
-                message: "恭喜你,登录成功",
-                type: "success",
-                duration: 1000,
-                onClose: () => {
-                  window.sessionStorage.setItem("token", res.token);
-                  this.$router.push("/home");
-                },
-              });
-            });
+              console.log(res);
+              if(res.data==null){
+                console.log(1);
+                this.$message({
+									message: res.meta.msg,
+									type: 'error',
+									duration: 1000,
+									customClass: 'msg',
+								})
+								setTimeout(() => {
+									sessionStorage.clear()
+								})
+              }
+              else{
+                window.sessionStorage.setItem('token', res.data.token)
+                window.sessionStorage.setItem('user', res.data.username)
+                this.$message({
+                  message:res.meta.msg,
+									type: 'success',
+									duration: 1000,
+									customClass: 'msg',
+									onClose: () => {
+										this.$router.push('/home')
+									}
+								});
+              }
+            }); 
         } else {
           console.log("error submit!!");
           return false;
