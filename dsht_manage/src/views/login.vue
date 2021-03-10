@@ -70,7 +70,6 @@ export default {
               password: this.loginInfo.password,
             })
             .then((res) => {
-<<<<<<< HEAD
               console.log(res);
               if(res.data==null){
                 console.log(1);
@@ -98,18 +97,6 @@ export default {
 								});
               }
             }); 
-=======
-              this.$message({
-                message: "恭喜你,登录成功",
-                type: "success",
-                duration: 1000,
-                onClose: () => {
-                  window.sessionStorage.setItem("token", res.token);
-                  this.$router.push("/home");
-                },
-              });
-            });
->>>>>>> b07be9217cd71b2ff74506c7a0145a86f5f586db
         } else {
           console.log("error submit!!");
           return false;
