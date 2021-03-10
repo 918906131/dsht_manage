@@ -64,22 +64,20 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.axios
-            .post("/api/login", {
+            .post("api/login", {
               username: this.loginInfo.username,
               password: this.loginInfo.password,
             })
             .then((res) => {
-             
-                this.$message({
-                  message: "恭喜你,登录成功",
-                  type: "success",
-                  duration: 1000,
-                  onClose: () => {
-                    window.sessionStorage.setItem("token", res.token);
-                    this.$router.push("/home");
-                  },
-                });
-              
+              this.$message({
+                message: "恭喜你,登录成功",
+                type: "success",
+                duration: 1000,
+                onClose: () => {
+                  window.sessionStorage.setItem("token", res.token);
+                  this.$router.push("/home");
+                },
+              });
             });
         } else {
           console.log("error submit!!");
@@ -92,18 +90,15 @@ export default {
 </script>
 <style scoped>
 #login {
-  position: relative;
-  height: 100vh;
-  z-index: 21;
+  height: 100%;
   background: orange;
-  background-color: rgba(223, 175, 18);
+  background-color: rgba(223, 175, 18, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .el_form {
   padding: 30px;
-  position: relative;
   display: flex;
   width: 300px;
   border-radius: 10px;
@@ -116,11 +111,5 @@ export default {
 }
 .el_input {
   width: 250px;
-}
-span {
-  font-size: 0.12rem;
-  position: absolute;
-  bottom: 0.1rem;
-  right: 0.2rem;
 }
 </style>

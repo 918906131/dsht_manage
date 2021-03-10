@@ -2,7 +2,7 @@ import router from './../../router'
 import axios from 'axios'
 export default function (config) {
     const instance = axios.create({
-        baseURL: '/api/private/v1',
+        baseURL: '/api',
         timeout: 1000,
     });
     // 添加响应拦截器
@@ -22,9 +22,9 @@ export default function (config) {
         // 在发送请求之前做些什么
         if (config.url === '/login') {
             return config;
-        }else{
-            let token=sessionStorage.getItem('token');
-            config.headers['token'] = token;
+        } else {
+            let token = sessionStorage.getItem('token');
+            config.headers.Authorization = token;
         }
         return config;
     }, function (error) {

@@ -1,14 +1,74 @@
 <template>
   <div class="home">
+    <el-header class="el_header">电商后台管理系统</el-header>
+    <el-container>
+      <el-aside width="200px" class="el_aside">
+        <el-menu
+          default-active="1"
+          class="el-menu-vertical-demo"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+          :router="is"
+        >
+          <el-submenu :index="item.id+'-1'+''" v-for="item in list" :key="item.id">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>{{ item.authName }}</span>
+            </template>
+            <el-menu-item
+              :index="ite.id+'-6'+''"
+              v-for="ite in item.children"
+              :key="ite.id"
+              :route="{ path: '/home/' + ite.path }"
+              >{{ ite.authName }}</el-menu-item
+            >
+          </el-submenu>
+        </el-menu>
+      </el-aside>
+      <el-main class="el_main">
+        <router-view></router-view>
+      </el-main>
+    </el-container>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-
+import { login_res, menus_res } from "./../assets/js/request";
 export default {
-  name: 'Home',
-  components: {
-  }
-}
+  name: "Home",
+  components: {},
+  data() {
+    return {
+      list: [],
+      is: true,
+    };
+  },
+  mounted() {
+    login_res().then((res) => {
+      console.log(res);
+      window.sessionStorage.setItem("token", res.data.token);
+    });
+    menus_res().then((res) => {
+      console.log(res);
+      this.list = res.data;
+    });
+  },
+};
 </script>
+<style scoped>
+.home {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+}
+.el_header {
+  background: #373d41;
+  color: white;
+}
+.el_aside {
+  background: #333744;
+  color: white;
+}
+</style>
