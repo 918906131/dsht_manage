@@ -65,11 +65,12 @@ export default {
               
         if (valid) {
           this.axios
-            .post("/api/login", {
+            .post("api/login", {
               username: this.loginInfo.username,
               password: this.loginInfo.password,
             })
             .then((res) => {
+<<<<<<< HEAD
               console.log(res);
               if(res.data==null){
                 console.log(1);
@@ -97,6 +98,18 @@ export default {
 								});
               }
             }); 
+=======
+              this.$message({
+                message: "恭喜你,登录成功",
+                type: "success",
+                duration: 1000,
+                onClose: () => {
+                  window.sessionStorage.setItem("token", res.token);
+                  this.$router.push("/home");
+                },
+              });
+            });
+>>>>>>> b07be9217cd71b2ff74506c7a0145a86f5f586db
         } else {
           console.log("error submit!!");
           return false;
@@ -108,18 +121,15 @@ export default {
 </script>
 <style scoped>
 #login {
-  position: relative;
-  height: 100vh;
-  z-index: 21;
+  height: 100%;
   background: orange;
-  background-color: rgba(223, 175, 18);
+  background-color: rgba(223, 175, 18, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .el_form {
   padding: 30px;
-  position: relative;
   display: flex;
   width: 300px;
   border-radius: 10px;
@@ -132,11 +142,5 @@ export default {
 }
 .el_input {
   width: 250px;
-}
-span {
-  font-size: 0.12rem;
-  position: absolute;
-  bottom: 0.1rem;
-  right: 0.2rem;
 }
 </style>

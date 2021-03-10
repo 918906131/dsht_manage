@@ -9,10 +9,10 @@ export function login_res() {
         },
     })
 }
-//获取轮播图数据
-export function carousel_res() {
+//获取左侧菜单数据
+export function menus_res() {
     return request({
-        url: "/carousel",
+        url: "/menus",
         method: "get",
     })
 }
