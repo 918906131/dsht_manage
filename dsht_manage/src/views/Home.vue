@@ -11,13 +11,17 @@
           active-text-color="#ffd04b"
           :router="is"
         >
-          <el-submenu :index="item.id+'-1'+''" v-for="item in list" :key="item.id">
+          <el-submenu
+            :index="item.id + '-1' + ''"
+            v-for="item in list"
+            :key="item.id"
+          >
             <template slot="title">
               <i class="el-icon-location"></i>
               <span>{{ item.authName }}</span>
             </template>
             <el-menu-item
-              :index="ite.id+'-6'+''"
+              :index="ite.id + '-6' + ''"
               v-for="ite in item.children"
               :key="ite.id"
               :route="{ path: '/home/' + ite.path }"
@@ -27,6 +31,15 @@
         </el-menu>
       </el-aside>
       <el-main class="el_main">
+        <div class="nov">
+          <router-link to="">首页></router-link>
+          <router-link to=""
+            >{{ this.$store.state.nov_title }} ></router-link
+          >
+          <router-link to=""
+            >{{ this.$store.state.nov_son_title }} ></router-link
+          >
+        </div>
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -35,7 +48,7 @@
 
 <script>
 // @ is an alias to /src
-import { login_res, menus_res } from "./../assets/js/request";
+import {  menus_res } from "./../assets/js/request";
 export default {
   name: "Home",
   components: {},
@@ -46,12 +59,9 @@ export default {
     };
   },
   mounted() {
-    login_res().then((res) => {
-      console.log(res);
-      window.sessionStorage.setItem("token", res.data.token);
-    });
+    
     menus_res().then((res) => {
-      console.log(res);
+      // console.log(res);
       this.list = res.data;
     });
   },
@@ -66,9 +76,16 @@ export default {
 .el_header {
   background: #373d41;
   color: white;
+  font-size: 34px;
 }
 .el_aside {
   background: #333744;
   color: white;
+}
+.nov {
+  font-size: 24px;
+}
+.el_main {
+  background-color: #eaedf1;
 }
 </style>

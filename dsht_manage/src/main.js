@@ -6,16 +6,21 @@ import router from './router'
 import store from './store'
 import axios from "axios";
 import VueAxios from 'vue-axios'
+import echarts from "echarts";
+Vue.prototype.$echarts = echarts
+//引入样式重置文件
+import './assets/css/common.css'
 Vue.prototype.$axios = axios;
 Vue.use(VueAxios, axios)
 Vue.use(ElementUI);
 Vue.config.productionTip = false
- // 添加响应拦截器
- axios.interceptors.response.use(function (response) {
+console.dir(Vue);
+// 添加响应拦截器
+axios.interceptors.response.use(function (response) {
   // 对响应数据做点什么
   //如果token失效,则让用户重新登录
   if (response.data.status === 400) {
-      router.replace('/')
+    router.replace('/')
   }
   return response.data;
 }, function (error) {
@@ -26,10 +31,10 @@ Vue.config.productionTip = false
 axios.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么
   if (config.url === '/login') {
-      return config;
-  }else{
-      let token=sessionStorage.getItem('token');
-      config.headers['token'] = token;
+    return config;
+  } else {
+    let token = sessionStorage.getItem('token');
+    config.headers['token'] = token;
   }
   return config;
 }, function (error) {

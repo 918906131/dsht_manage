@@ -12,6 +12,10 @@ export default {
   },
   methods: {},
   components: {},
+  mounted() {
+    this.$store.commit("modify_nov", "商品管理");
+    this.$store.commit("modify_nov_son", "分类参数");
+  },
 };
 </script>
 

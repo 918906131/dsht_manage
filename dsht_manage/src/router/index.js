@@ -5,8 +5,7 @@ Vue.use(VueRouter)
 
 const routes = [{
     path: '/',
-    name: 'Home',
-    component: () => import( /* webpackChunkName: "about" */ '../views/Home.vue'),
+    redirect: '/login'
   },
   {
     path: '/home',
@@ -14,7 +13,7 @@ const routes = [{
     component: () => import( /* webpackChunkName: "about" */ '../views/Home.vue'),
     children: [{
         path: '/',
-        redirect: '/home/userList'
+        redirect: '/home/users'
       },
       {
         path: 'users',
@@ -22,11 +21,18 @@ const routes = [{
       },
       {
         path: 'roles',
-        component: () => import('./../components/addUser.vue')
+        component: () => import('./../components/roles.vue')
       },
       {
         path: 'rights',
-        component: () => import('./../components/removeUser.vue')
+        component: () => import('./../components/removeUser.vue'),
+        children: [{
+          path: 'right_m',
+          component: () => import('./../components/roles/right_m.vue')
+        }, {
+          path: 'roles_list',
+          component: () => import('./../components/roles/roles_list.vue')
+        }, ]
       },
       {
         path: 'goods',

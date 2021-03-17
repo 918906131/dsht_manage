@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>goods</h1>
+    <h1>roles_list</h1>
   </div>
 </template>
 
@@ -12,10 +12,6 @@ export default {
   },
   methods: {},
   components: {},
-  mounted() {
-    this.$store.commit("modify_nov", "商品管理");
-    this.$store.commit("modify_nov_son", "商品列表");
-  },
 };
 </script>
 
