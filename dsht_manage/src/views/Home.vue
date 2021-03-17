@@ -47,17 +47,20 @@ export default {
   },
   mounted() {
     login_res().then((res) => {
-      console.log(res);
+      // console.log(res);
       window.sessionStorage.setItem("token", res.data.token);
     });
     menus_res().then((res) => {
-      console.log(res);
+      // console.log(res);
       this.list = res.data;
     });
   },
 };
 </script>
 <style scoped>
+ .el-main{
+        background-color: #eaedf1;
+    }
 .home {
   height: 100%;
   display: flex;

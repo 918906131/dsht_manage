@@ -3,7 +3,7 @@ import axios from 'axios'
 export default function (config) {
     const instance = axios.create({
         baseURL: '/api',
-        timeout: 1000,
+        timeout: 2000,
     });
     // 添加响应拦截器
     instance.interceptors.response.use(function (response) {
