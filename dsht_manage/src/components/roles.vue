@@ -101,21 +101,33 @@
             @click="delete_role(scope.row)"
             ><i class="el-icon-delete"></i>删除</el-button
           >
-          <el-button class="el_but" type="danger">
+          <el-button class="el_but" type="danger" @click="set_role(scope.row)">
             <i class="el-icon-setting"></i>
             分配权限</el-button
           >
         </template>
       </el-table-column>
     </el-table>
-    <el-tree
-      :data="rightTree"
-      show-checkbox
-      node-key="id"
-      :default-expanded-keys="[2, 3]"
-      :default-checked-keys="[5]"
-    >
-    </el-tree>
+    <!-- 权限菜单树 -->
+    <el-dialog class="menu_tree" :visible.sync="isTree" title="分配权限">
+      <!-- 分配权限的对话框 -->
+      <!-- 权限菜单 -->
+      <el-tree
+        ref="tree"
+        :data="tree"
+        show-checkbox
+        node-key="id"
+        default-expand-all
+        class="tree_c"
+        :props="treeprops"
+        :default-checked-keys="defKeys"
+      ></el-tree>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="cancel2">取 消</el-button>
+        <el-button type="primary" @click="sure"> 确 定</el-button>
+      </span>
+    </el-dialog>
+
     <router-view></router-view>
   </div>
 </template>
@@ -127,6 +139,7 @@ import {
   delete_,
   edit_,
   rights_list,
+  updata_premiss,
 } from "./../assets/js/request";
 
 export default {
@@ -141,13 +154,79 @@ export default {
         addname: "",
         addcom: "",
       },
+      tree: [],
+      isTree: false,
       edit_wrap: false,
       id: "",
       add_warp: false,
-      rightTree: [],
+      set_roleup_id: "",
+      set_roledown_id: "",
+      treeprops: {
+        label: "authName",
+        children: "children",
+      },
+      diguitree: [],
+      defKeys: [],
     };
   },
   methods: {
+    //递归遍历所有不含children的对象id
+    digui(node, arr) {
+      if (!node.children) {
+        arr.push(node.id);
+      } else {
+        node.children.forEach((item) => {
+          this.digui(item, arr);
+        });
+      }
+    },
+    cancel2() {
+      this.isTree = false;
+    },
+    sure() {
+      /* console.log(
+        this.$refs.tree.getCheckedKeys(),
+        this.$refs.tree.getHalfCheckedKeys()
+      ); */
+      let res1 = this.$refs.tree.getCheckedKeys();
+      let res2 = this.$refs.tree.getHalfCheckedKeys();
+      let arr = [...res1, ...res2].join(",");
+      // console.log(arr);
+      updata_premiss(this.set_roleup_id, arr).then((res) => {
+        console.log(res);
+        rights_res().then((res) => {
+          this.tableData = res.data;
+          this.isTree = false;
+        });
+      });
+    },
+    //分配
+    set_role(v) {
+      //加载下拉
+      this.isTree = true;
+      console.log(v);
+      this.set_roleup_id = v.id;
+      rights_list().then((res) => {
+        this.tree = res.data;
+        this.digui(v, this.diguitree);
+        console.log(res);
+        this.defKeys = arrtemp;
+      });
+      // 获取所有三级节点的Id
+      let arrtemp = [];
+
+      v.children.forEach((item1) => {
+        arrtemp.push(item1.id);
+
+        item1.children.forEach((item2) => {
+          arrtemp.push(item2.id);
+
+          item2.children.forEach((item3) => {
+            arrtemp.push(item3.id);
+          });
+        });
+      });
+    },
     //添加关闭显示遮影层
     add_warp_close_state() {
       this.add_warp = false;
@@ -264,7 +343,7 @@ export default {
     });
     //加载下拉
     rights_list().then((res) => {
-      this.rightTree = res.data;
+      this.tree = res.data;
       console.log(res);
     });
     this.$store.commit("modify_nov", "权限管理");

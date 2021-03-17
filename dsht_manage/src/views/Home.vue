@@ -48,7 +48,7 @@
 
 <script>
 // @ is an alias to /src
-import {  menus_res } from "./../assets/js/request";
+import {  menus_res ,login_res} from "./../assets/js/request";
 export default {
   name: "Home",
   components: {},
@@ -59,7 +59,10 @@ export default {
     };
   },
   mounted() {
-    
+    login_res().then((res) => {
+      // console.log(res);
+      window.sessionStorage.setItem("token", res.data.token);
+    });
     menus_res().then((res) => {
       // console.log(res);
       this.list = res.data;
@@ -68,6 +71,9 @@ export default {
 };
 </script>
 <style scoped>
+ .el-main{
+        background-color: #eaedf1;
+    }
 .home {
   height: 100%;
   display: flex;
