@@ -213,6 +213,11 @@ export default {
             this.formLabelAlign.pay_status
           ).then((res) => {
             console.log(res);
+            order_list(1).then((res) => {
+              console.log(res);
+              this.data = res;
+              this.tableData = res.data.goods;
+            });
           });
           this.$message({
             type: "success",

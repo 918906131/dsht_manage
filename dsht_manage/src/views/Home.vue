@@ -4,12 +4,12 @@
     <el-container>
       <el-aside width="200px" class="el_aside">
         <el-menu
-          default-active="1"
+          default-active="2"
           class="el-menu-vertical-demo"
           background-color="#545c64"
           text-color="#fff"
           active-text-color="#ffd04b"
-          :router="is"
+          :router= true
         >
           <el-submenu
             :index="item.id + '-1' + ''"
@@ -33,9 +33,7 @@
       <el-main class="el_main">
         <div class="nov">
           <router-link to="">首页></router-link>
-          <router-link to=""
-            >{{ this.$store.state.nov_title }} ></router-link
-          >
+          <router-link to="">{{ this.$store.state.nov_title }} ></router-link>
           <router-link to=""
             >{{ this.$store.state.nov_son_title }} ></router-link
           >
@@ -48,7 +46,7 @@
 
 <script>
 // @ is an alias to /src
-import {  menus_res ,login_res} from "./../assets/js/request";
+import { menus_res, login_res } from "./../assets/js/request";
 export default {
   name: "Home",
   components: {},
@@ -71,9 +69,9 @@ export default {
 };
 </script>
 <style scoped>
- .el-main{
-        background-color: #eaedf1;
-    }
+.el-main {
+  background-color: #eaedf1;
+}
 .home {
   height: 100%;
   display: flex;

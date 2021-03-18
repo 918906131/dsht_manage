@@ -257,6 +257,11 @@ export default {
             this.formLabelAlign.addcom
           ).then((res) => {
             console.log(res);
+            //加载表格
+            rights_res().then((res) => {
+              this.tableData = res.data;
+              console.log(res);
+            });
           });
           this.$message({
             type: "success",
@@ -281,6 +286,11 @@ export default {
         .then(() => {
           delete_(row.id).then((res) => {
             console.log(res);
+            //加载表格
+            rights_res().then((res) => {
+              this.tableData = res.data;
+              console.log(res);
+            });
           });
           this.$message({
             type: "success",
@@ -318,6 +328,11 @@ export default {
             this.formLabelAlign.com
           ).then((res) => {
             console.log(res);
+            //加载表格
+            rights_res().then((res) => {
+              this.tableData = res.data;
+              console.log(res);
+            });
           });
           this.$message({
             type: "success",

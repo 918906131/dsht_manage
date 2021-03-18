@@ -238,3 +238,13 @@ export function updata_premiss(id, arr) {
         },
     })
 }
+//分配用户角色
+export function set_role(id, ridid) {
+    return request({
+        url: `users/${id}/role/`,
+        method: "put",
+        data: {
+            rid: ridid
+        },
+    })
+}
